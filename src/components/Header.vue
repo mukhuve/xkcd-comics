@@ -2,7 +2,7 @@
   <div class="host b-glass">
     <v-app-bar flat dense color="transparent">
       <h2>
-        XKCD <span>#{{ id }}</span>
+        XKCD <span v-if="id">#{{ id }}</span>
       </h2>
       <v-spacer></v-spacer>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
