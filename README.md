@@ -1,5 +1,9 @@
 # XKCD Comics
 
+## PWA Online Preview
+
+Click [here](https://mukuve.github.io/xkcd-comics/) to see it in action.
+
 ## Project setup
 
 ```
