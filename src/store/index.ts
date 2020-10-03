@@ -40,7 +40,6 @@ export default new Vuex.Store<State>({
         if (id > state.last) id = 1;
         const uri = `https://xkcd.com/${Math.round(id)}/info.0.json`;
         const { data, status } = await Axios.get(`${proxy}/${uri}`);
-        console.log(data, status);
         if (status >= 200 && status < 300) comic = new ComicModel(data);
         else throw new Error('Request error');
       } catch (e) {
@@ -52,7 +51,6 @@ export default new Vuex.Store<State>({
     async loadLast({ commit }) {
       const { data } = await Axios.get(`${proxy}/https://xkcd.com/info.0.json`);
       if (data) commit('setLast', data?.num);
-      console.log('Last comic is:', data?.num);
     },
   },
 });
