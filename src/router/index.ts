@@ -5,14 +5,14 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/:id?',
-    name: '',
-    component: () => import('../views/Home.vue'),
-  },
-  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue'),
+  },
+  {
+    path: '/:id?',
+    name: '',
+    component: () => import('../views/Home.vue'),
   },
 ];
 

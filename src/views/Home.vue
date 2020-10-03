@@ -29,3 +29,8 @@ export default class Home extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.host {
+  flex: 1 0;
+}
+</style>

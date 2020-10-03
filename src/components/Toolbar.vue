@@ -15,19 +15,19 @@
     ></star-rating>
     <v-spacer></v-spacer>
     <div class="controls d-flex align-center justify-center">
-      <v-btn icon class="mr-1 ml-1" @click="command('first')">
+      <v-btn icon class="mr-1 ml-1" @click="navigateTo('first')">
         <v-icon size="36">mdi-skip-previous</v-icon>
       </v-btn>
-      <v-btn icon class="mr-1 ml-1" @click="command('prev')">
+      <v-btn icon class="mr-1 ml-1" @click="navigateTo('prev')">
         <v-icon size="36">mdi-chevron-left</v-icon>
       </v-btn>
-      <v-btn icon class="mr-1 ml-1" @click="command('random')">
+      <v-btn icon class="mr-1 ml-1" @click="navigateTo('random')">
         <v-icon size="36">mdi-shuffle-variant</v-icon>
       </v-btn>
-      <v-btn icon class="mr-1 ml-1" @click="command('next')">
+      <v-btn icon class="mr-1 ml-1" @click="navigateTo('next')">
         <v-icon size="36">mdi-chevron-right</v-icon>
       </v-btn>
-      <v-btn icon class="mr-1 ml-1" @click="command('last')">
+      <v-btn icon class="mr-1 ml-1" @click="navigateTo('last')">
         <v-icon size="36">mdi-skip-next</v-icon>
       </v-btn>
     </div>
@@ -35,6 +35,8 @@
 </template>
 
 <script lang="ts">
+import { ComicModel } from '@/models/comic';
+import { LoadCommand } from '@/store/types';
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -47,9 +49,32 @@ import { mapActions, mapState } from 'vuex';
     comic: 'comic' as any,
     rating: ({ ratings = {}, comic = {} }: any) => +ratings[comic.id],
   }),
-  methods: mapActions(['command', 'rate']),
+  methods: mapActions(['rate']),
 })
-export default class Toolbar extends Vue {}
+export default class Toolbar extends Vue {
+  async navigateTo(command: LoadCommand = 'random') {
+    const { comic = new ComicModel(), last = 0 } = this.$store.state || {};
+    let id = 0;
+    switch (command) {
+      case 'first':
+        id = 1;
+        break;
+      case 'prev':
+        id = comic.id - 1;
+        break;
+      case 'next':
+        id = comic.id + 1;
+        break;
+      case 'last':
+        id = last;
+        break;
+      case 'random':
+        id = Math.round(Math.random() * last);
+        break;
+    }
+    this.$router.push(`/${id}`);
+  }
+}
 </script>
 <style scoped lang="scss">
 .host {

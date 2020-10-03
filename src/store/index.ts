@@ -3,7 +3,7 @@ import Axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { State, LoadCommand } from './types';
+import { State } from './types';
 
 Vue.use(Vuex);
 const ratingskey = 'comics:ratings';
@@ -31,28 +31,6 @@ export default new Vuex.Store<State>({
       commit('setRating', stars);
       localStorage.setItem(ratingskey, JSON.stringify(state.ratings || {}));
     },
-    async command({ state }, command: LoadCommand = 'random') {
-      const { comic = new ComicModel(), last = 0 } = state || {};
-      let id = 0;
-      switch (command) {
-        case 'first':
-          id = 1;
-          break;
-        case 'prev':
-          id = comic.id - 1;
-          break;
-        case 'next':
-          id = comic.id + 1;
-          break;
-        case 'last':
-          id = last;
-          break;
-        case 'random':
-          id = Math.random() * last;
-          break;
-      }
-      this.dispatch('load', id);
-    },
     async load(opts, id = 0) {
       const { commit, state } = opts;
       commit('setComic', undefined);
@@ -70,6 +48,11 @@ export default new Vuex.Store<State>({
         if (res.data) comic = new ComicModel(res.data);
       }
       commit('setComic', comic);
+    },
+    async loadLast({ commit }) {
+      const { data } = await Axios.get(`${proxy}/https://xkcd.com/info.0.json`);
+      if (data) commit('setLast', data?.num);
+      console.log('Last comic is:', data?.num);
     },
   },
 });

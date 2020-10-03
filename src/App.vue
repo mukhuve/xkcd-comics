@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <Header />
-    <v-main>
+    <v-main class="d-flex">
       <router-view></router-view>
     </v-main>
-    <Toolbar />
+    <Toolbar v-if="$route.path !== '/about'" />
   </v-app>
 </template>
 
@@ -19,6 +19,9 @@ export default Vue.extend({
     Header,
     Toolbar,
   },
+  created() {
+    this.$store.dispatch('loadLast');
+  },
 });
 </script>
 <style lang="scss">
@@ -27,14 +30,22 @@ body {
   * {
     color: var(--v-secondary-lighten1);
   }
+  .v-main__wrap {
+    flex: 1 0;
+    display: flex;
+    flex-flow: column nowrap;
+  }
   .b-glass {
-    backdrop-filter: blur(22px);
+    backdrop-filter: blur(12px);
     background: #f3f4f766;
   }
   .theme--dark {
     .b-glass {
       background: #2d314288;
     }
+  }
+  .photo-zoom-pro .container {
+    padding: 0;
   }
 }
 </style>

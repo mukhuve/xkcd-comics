@@ -11,6 +11,6 @@ export class ComicModel {
     this.title = obj?.safe_title || obj?.title || '';
     this.alt = obj?.alt || `Comic image #${this.id}`;
     if (obj.year && obj.month && obj.day)
-      this.date = new Date(+obj?.year, +obj?.month, +obj?.day);
+      this.date = new Date(+obj?.year, +obj?.month - 1, +obj?.day);
   }
 }

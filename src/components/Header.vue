@@ -1,14 +1,20 @@
 <template>
   <div class="host b-glass">
     <v-app-bar flat dense color="transparent">
-      <h2>
-        XKCD <span v-if="id">#{{ id }}</span>
-      </h2>
+      <router-link to="/">
+        <h2>
+          XKCD <span v-if="id">#{{ id }}</span>
+        </h2>
+      </router-link>
       <v-spacer></v-spacer>
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+      <v-btn
+        icon
+        class="theme-switch"
+        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+      >
         <v-icon>mdi-theme-light-dark</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon to="/about">
         <v-icon>mdi-information-variant</v-icon>
       </v-btn>
     </v-app-bar>
@@ -17,14 +23,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 
-@Component({
-  computed: mapState({
-    id: (state: any) => state?.comic?.id,
-  }),
-})
-export default class Header extends Vue {}
+@Component({})
+export default class Header extends Vue {
+  get id() {
+    if (this.$route.path === '/about') return undefined;
+    return this.$store?.state?.comic?.id;
+  }
+}
 </script>
 <style scoped lang="scss">
 .host {
