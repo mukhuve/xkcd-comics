@@ -2,7 +2,7 @@
 
 ## PWA Online Preview
 
-Click [here](https://mukuve.github.io/xkcd-comics/) to see it in action. (Ctrl + click to open in new tab)
+Click [here](https://mukhuve.github.io/xkcd-comics/) to see it in action. (Ctrl + click to open in new tab)
 
 ## Project setup
 
